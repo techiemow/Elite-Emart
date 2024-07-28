@@ -33,6 +33,19 @@ const Navigation = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+    const handlePageClick = (page) => {
+        switch (page) {
+            case 'Sign Up':
+                navigate('/Register');
+                break;
+            case 'Login':
+                navigate('/Login');
+                break;
+            default:
+                break;
+        }
+        handleCloseNavMenu();
+    };
 
     const handleSettingClick = (setting) => {
         switch (setting) {
@@ -52,15 +65,15 @@ const Navigation = () => {
         handleCloseUserMenu();
     };
   return (
-    <header className='h-20 shadow-md'>
+    <header className=' shadow-md bg-white'>
         <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
-            <div className='flex items-center h-full'>
-                <img src={logo} alt="Logo" className="h-16" />
+            <div className='flex items-center' style={{marginTop:"10px"}}>
+                <img src={logo} alt="Logo" className="h-16" onClick={()=>navigate("/")} />
             </div>
             <div className='hidden lg:flex items-center w-full justify-between max-w-sm focus-within:shadow-lg '>
             <TextField  label="search products here....."  className='w-full outline-none' />
             <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm'>
-            <SearchIcon/>
+            <SearchIcon className='text-white'/>
             </div>
              
             </div>
@@ -72,24 +85,15 @@ const Navigation = () => {
 
             <div className='flex items-center gap-4'> 
             <div className='text-3xl cursor-pointer'>
-               <LuUserCircle2/>
-            </div>
-            <div className='text-2xl relative'>
-               <span> <FaShoppingCart /></span>
-               <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
-                <Typography>
-                    <span>0</span> 
-                </Typography>
-               </div>
-            </div>
-            <div>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
                         {username.length === 0 ? (
                             pages.map((page) => (
                                 <Button
+                                    
+                                    variant='contained'
                                     key={page}
                                     onClick={() => handlePageClick(page)}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{mx:2, my: 2, color: 'white', display: 'block' }}
                                 >
                                     {page}
                                 </Button>
@@ -132,7 +136,16 @@ const Navigation = () => {
                             </Menu>
                         </Box>
                     )}
-            </div>  
+            </div>
+            <div className='text-2xl relative'>
+               <span> <FaShoppingCart /></span>
+               <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
+                <Typography>
+                    <span>0</span> 
+                </Typography>
+               </div>
+            </div>
+             
             </div>
         </div>
     </header>
