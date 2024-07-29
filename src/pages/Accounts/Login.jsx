@@ -72,9 +72,10 @@ const Login = () => {
     const { username, password } = values;
   
     try {
-      const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`,{
-     
+      const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`, {
+        withCredentials: true
       });
+      
       if (apiResponse.data.success) {
         localStorage.setItem('login', apiResponse.data.username);
         localStorage.setItem('usertoken', apiResponse.data.token);
