@@ -5,29 +5,31 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import bcrypt from 'bcryptjs';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { GrDocumentUser } from "react-icons/gr";
+import styled from 'styled-components';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { apiurl } from '../../../Constants/apiurl';
+import { toast } from 'react-toastify';
 
-// import 'react-toastify/dist/ReactToastify.css';
-// import "./Signup.css"
-// import { apiurl } from '../Constants/apiurl';
+// Placeholder for apiurl
+
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:5173/">
-        Your Website
+      <Link color="inherit" to="/" className='hover:underline text-blue-400'>
+        Eliteemart
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -36,9 +38,30 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
+const PasswordFieldWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .eye-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+`;
 
 export default function SignUp() {
   const [terms, setTerms] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword((prevShowConfirmPassword) => !prevShowConfirmPassword);
+  };
 
   const navigate = useNavigate();
 
@@ -61,22 +84,30 @@ export default function SignUp() {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    console.log(values);
     try {
       const hashedPassword = await bcrypt.hash(values.password, 10);
-      const apiResponse = await axios.post(`${apiurl}/registration`, {
+      const apiResponse = await axios.post(`${apiurl}/Signup`, {
         username: values.username,
         phoneNumber: values.phoneNumber,
         emailaddress: values.email,
         password: hashedPassword,
       });
 
-      console.log('API Response:', apiResponse.data);
+     
 
-      if (apiResponse?.data?._id) {
+      if (apiResponse?.data?.data?._id) {
+        toast.success("User created successfully")
         resetForm();
         setTerms(false);
+        navigate("/Login"); // Redirect to home or login after successful registration
       }
+       else {
+        toast.error("Registration failed")
+       }
+  
     } catch (error) {
+      toast.error("Registration failed")
       console.error('Registration error:', error);
     } finally {
       setSubmitting(false);
@@ -95,8 +126,11 @@ export default function SignUp() {
             width: '100%',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'black' } } className='mx-auto w-5'>
-          <GrDocumentUser />
+          <Avatar sx={{ m: 1, bgcolor: 'white',color:'black' }} className='mx-auto  w-full max-w-sm'>
+           
+           <GrDocumentUser className='size-8' />
+            
+         
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
@@ -135,29 +169,40 @@ export default function SignUp() {
                     <ErrorMessage name="email" component="div" className="error  text-red-600" />
                   </Grid>
                   <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
+                    <PasswordFieldWrapper>
+                      <Field
+                        as={TextField}
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type={showPassword ? 'text' : 'password'}
+                        id="password"
+                        autoComplete="current-password"
+                      />
+                      <div className="eye-icon" onClick={toggleShowPassword}>
+                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                      </div>
+                    </PasswordFieldWrapper>
                     <ErrorMessage name="password" component="div" className="error  text-red-600" />
                   </Grid>
                   <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      required
-                      fullWidth
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      type="password"
-                      id="confirmPassword"
-                      autoComplete="new-password"
-                    />
+                    <PasswordFieldWrapper>
+                      <Field
+                        as={TextField}
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        id="confirmPassword"
+                        autoComplete="new-password"
+                      />
+                      <div className="eye-icon" onClick={toggleShowConfirmPassword}>
+                        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                      </div>
+                    </PasswordFieldWrapper>
                     <ErrorMessage name="confirmPassword" component="div" className="error  text-red-600" />
                   </Grid>
                   <Grid item xs={12}>
@@ -188,15 +233,14 @@ export default function SignUp() {
                   color="primary"
                   disabled={!terms || isSubmitting}
                   sx={{ mt: 3, mb: 2 }}
-                  onClick={()=> navigate("/")}
                 >
                   Sign Up
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
-                    <NavLink to="/login" variant="body2">
-                      Already have an account? Sign in
-                    </NavLink>
+                    <Link to={"/Login"} style={{ textDecoration: "underline" }} className='text-blue-500'>
+                      Already have an account !
+                    </Link>
                   </Grid>
                 </Grid>
               </Box>
