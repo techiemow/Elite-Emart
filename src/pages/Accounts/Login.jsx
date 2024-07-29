@@ -70,25 +70,26 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const { username, password } = values;
-
+  
     try {
-      const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`);
-      if (apiResponse.data) {
+      const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`,{
+     
+      });
+      if (apiResponse.data.success) {
         localStorage.setItem('login', apiResponse.data.username);
         localStorage.setItem('usertoken', apiResponse.data.token);
-        toast.success(" login success ")
+        toast.success("Login success");
         navigate('/');
       } else {
-        toast.error("Invalid credentials")
+        toast.error("Invalid credentials");
       }
     } catch (error) {
-      
-      
+      toast.error("Login failed");
     }
-
+  
     setSubmitting(false);
   };
-
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
