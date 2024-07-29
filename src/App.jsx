@@ -7,20 +7,23 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios'
 import { apiurl } from '../Constants/apiurl'
+import { setUserDetails } from './Store/UserSlice'
+import { useDispatch } from 'react-redux'
 const App = () => {
-  const [userDetails, setUserDetails] =useState("");
+  
+  const dispatch = useDispatch();
     
   const fetchUserDetails = async()=>{
     const dataResponse = await axios.get(`${apiurl}/UserDetails`,{
       withCredentials:true,
     })
-    console.log(dataResponse);
+    console.log(dataResponse.data.data);
 
-    const dataApi = dataResponse.data.data
+   
 
-    if(dataApi.success){
-      setUserDetails(dataApi)
-      console.log(userDetails);
+    if(dataResponse.data.success){
+      dispatch(setUserDetails(dataResponse.data.data));
+      
     }
 }
 

@@ -5,9 +5,20 @@ import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Ty
 import { LuUserCircle2 } from "react-icons/lu";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { toast } from 'react-toastify';
+import  Cookies from "js-cookie"
+import { setUserDetails } from '../Store/UserSlice';
 
 
 const Navigation = () => {
+      
+    const dispatch = useDispatch();
+    const User = useSelector(state => state?.User.User)
+    console.log(User);
+
+    
     
     const pages = ["Sign Up", "Login"];
     const settings = ['My Account', "My Bookings", 'Logout'];
@@ -47,7 +58,7 @@ const Navigation = () => {
         handleCloseNavMenu();
     };
 
-    const handleSettingClick = (setting) => {
+    const handleSettingClick = async(setting) => {
         switch (setting) {
             case 'My Account':
                 navigate('/MyAccount');
@@ -56,9 +67,18 @@ const Navigation = () => {
                 navigate('/MyBookings');
                 break;
             case 'Logout':
-                localStorage.removeItem('login');
-                window.location.reload();
-                break;
+            
+                    toast.success("Logged out successfully")
+                    localStorage.removeItem('login');
+                    localStorage.removeItem('usertoken');
+                    Cookies.remove("token");
+                    dispatch(setUserDetails(null))
+                    navigate("/");
+                    break;
+                
+
+               
+        
             default:
                 break;
         }
@@ -106,10 +126,10 @@ const Navigation = () => {
                     </Box>
 
                     {username.length > 0 && (
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0 , mx:"50px"}} >
                             <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar src="/broken-image.jpg" />
+                                <IconButton onClick={handleOpenUserMenu} sx={{ px: 0 }}>
+                                <Avatar src="/broken-image.jpg"  />
                                 </IconButton>
                             </Tooltip>
                             <Menu
