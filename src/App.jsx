@@ -14,12 +14,12 @@ import { useDispatch } from 'react-redux'
 
 const App = () => {
   
-   const username = localStorage.getItem('login')
+
   
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchUserDetails = async () => {
+   const fetchUserDetails = async () => {
     try {
       const dataResponse = await axios.get(`${apiurl}/UserDetails`, {
         withCredentials: true,
@@ -38,7 +38,9 @@ const App = () => {
 
   useEffect(() => {
     fetchUserDetails();
-  }, [username]);
+  }, []);
+
+  
   
 
 

@@ -1,7 +1,7 @@
 import { Avatar, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 
 const AdminPanel = () => {
     const User = useSelector((state) => state?.User?.User);
@@ -23,15 +23,15 @@ const AdminPanel = () => {
                     <Typography className="text-sm">{User?.role}</Typography>
                 </div>
                 <div>
-                  <nav className='grid p-4'>
-                    <Link to={"AllUsers"} className='px-3 hover:bg-slate-200' >All Users</Link>
-                    <Link to={"Products"}  className='px-3  hover:bg-slate-200'>Products</Link> 
+                  <nav className='grid'>
+                    <Link to={"AllUsers"} className='px-2 py-1 hover:bg-slate-100' >All Users</Link>
+                    <Link to={"Products"}className='px-2 py-1 hover:bg-slate-100'>Products</Link> 
                   </nav>
                 </div>
             </aside>
-            <main>
-                main
-            </main>
+            <main className='w-full h-full p-2'>
+            <Outlet/>
+        </main>
         </div>
     );
 };

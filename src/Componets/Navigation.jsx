@@ -3,169 +3,111 @@ import logo from "../assest/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
 import { FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
 import { setUserDetails } from '../Store/UserSlice';
+import { FaRegCircleUser } from 'react-icons/fa6';
 
 const Navigation = () => {
     const dispatch = useDispatch();
-    const User = useSelector(state => state);
-    console.log(User);
-  
-    const [menuDisplay,setMenuDisplay] = useState(false)
-    const pages = ["Sign Up", "Login"];
-    const settings = ['Admin-Panel', 'My Account', "My Bookings", 'Logout'];
+    const User = useSelector(state => state?.User?.User);
 
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
 
-    const username = localStorage.getItem('login') || '';
+    const [menuDisplay, setMenuDisplay] = useState(false)
     const navigate = useNavigate();
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
 
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    const handleLogout = () => {
+        toast.success("Logged out successfully");
+        localStorage.removeItem('login');
+        localStorage.removeItem('usertoken');
+        Cookies.remove("token");
+        dispatch(setUserDetails(null));
+        navigate("/");
+    }
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    return (
+        <header className=' shadow-md bg-white'>
+            <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
+                <div className='flex items-center' style={{ marginTop: "10px" }}>
+                    <img src={logo} alt="Logo" className="h-16" onClick={() => navigate("/")} />
+                </div>
+                <div className='hidden lg:flex items-center w-full justify-between max-w-sm focus-within:shadow-lg '>
+                    <TextField label="search products here....." className='w-full outline-none' />
+                    <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm'>
+                        <SearchIcon className='text-white' />
+                    </div>
 
-    const handlePageClick = (page) => {
-        switch (page) {
-            case 'Sign Up':
-                navigate('/Register');
-                break;
-            case 'Login':
-                navigate('/Login');
-                break;
-            default:
-                break;
-        }
-        handleCloseNavMenu();
-    };
+                </div>
 
-    const handleSettingClick = async (setting) => {
-        switch (setting) {
-            case 'Admin-Panel':
-                setMenuDisplay(preve => !preve)
-                navigate("/AdminPanel");
-                break;
-            case 'My Account':
-                navigate('/MyAccount');
-                break;
-            case 'My Bookings':
-                navigate('/MyBookings');
-                break;
-            case 'Logout':
-                toast.success("Logged out successfully");
-                localStorage.removeItem('login');
-                localStorage.removeItem('usertoken');
-                Cookies.remove("token");
-                dispatch(setUserDetails(null));
-                navigate("/");
-                break;
-            default:
-                break;
-        }
-        handleCloseUserMenu();
-    };
 
-  return (
-    <header className=' shadow-md bg-white'>
-        <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
-            <div className='flex items-center' style={{marginTop:"10px"}}>
-                <img src={logo} alt="Logo" className="h-16" onClick={()=>navigate("/")} />
+
+
+
+
+                <div className='flex items-center gap-7'>
+                    <div className='cursor-pointer'>
+                        <div className='relative flex justify-center'>
+
+                            {
+                                User?._id && (
+                                    <div className='text-3xl cursor-pointer relative flex justify-center' onClick={() => setMenuDisplay(preve => !preve)}>
+
+
+                                        <FaRegCircleUser />
+
+                                    </div>
+                                )
+                            }
+
+
+                            {
+                                menuDisplay && (
+                                    <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded' >
+                                        <nav>
+
+                                            <Link to={"/AdminPanel/AllProducts"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
+
+
+
+                                        </nav>
+                                    </div>
+                                )
+                            }
+
+                        </div>
+
+
+                    </div>
+                    <div className='text-2xl relative'>
+                        <span> <FaShoppingCart /></span>
+                        <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
+                            <Typography>
+                                <span>0</span>
+                            </Typography>
+                        </div>
+                    </div>
+
+
+                    <div>
+                        {
+                            User?._id ? (
+                                <Button variant='contained' onClick={handleLogout }>Logout</Button>
+                            )
+                                : (
+                                    <Button variant='contained'><Link to={"/Login"} className='px-3 py-1 rounded-full'>Login</Link></Button>
+                                )
+                        }
+
+                    </div>
+
+                </div>
             </div>
-            <div className='hidden lg:flex items-center w-full justify-between max-w-sm focus-within:shadow-lg '>
-            <TextField  label="search products here....."  className='w-full outline-none' />
-            <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm'>
-            <SearchIcon className='text-white'/>
-            </div>
-             
-            </div>
-
-
-
-
-
-
-            <div className='flex items-center gap-4'> 
-            <div className='text-3xl cursor-pointer'>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-                        {username.length === 0 ? (
-                            pages.map((page) => (
-                                <Button
-                                    
-                                    variant='contained'
-                                    key={page}
-                                    onClick={() => handlePageClick(page)}
-                                    sx={{mx:2, my: 2, color: 'white', display: 'block' }}
-                                >
-                                    {page}
-                                </Button>
-                            ))
-                        ) : (
-                            <Box>
-                           
-                            </Box>
-                        )}
-                    </Box>
-
-                    {username.length > 0 && (
-            <Box sx={{ flexGrow: 0 , mx:"50px"}} >
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ px: 0 }}>
-                                <Avatar src="/broken-image.jpg"  />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: '45px' }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        </Box>
-                    )}
-            </div>
-            <div className='text-2xl relative'>
-               <span> <FaShoppingCart /></span>
-               <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
-                <Typography>
-                    <span>0</span> 
-                </Typography>
-               </div>
-            </div>
-             
-            </div>
-        </div>
-    </header>
-  )
+        </header>
+    )
 }
 
 export default Navigation
