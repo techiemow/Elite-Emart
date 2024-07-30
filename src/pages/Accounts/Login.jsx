@@ -71,22 +71,21 @@ const Login = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     const { username, password } = values;
   
-    try {
+    
       const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`, {
         withCredentials: true
       });
       
+      console.log(apiResponse.data.data)
       if (apiResponse.data.success) {
-        localStorage.setItem('login', apiResponse.data.username);
-        localStorage.setItem('usertoken', apiResponse.data.token);
+        localStorage.setItem('login', apiResponse.data.data.user.username);
+        localStorage.setItem('usertoken', apiResponse.data.data.token);
         toast.success("Login success");
         navigate('/');
       } else {
         toast.error("Invalid credentials");
       }
-    } catch (error) {
-      toast.error("Login failed");
-    }
+    
   
     setSubmitting(false);
   };

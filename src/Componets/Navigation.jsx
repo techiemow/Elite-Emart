@@ -1,29 +1,24 @@
-import React, { useState } from 'react'
-import logo from "../assest/logo.png"
+import React, { useState } from 'react';
+import logo from "../assest/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
-import { LuUserCircle2 } from "react-icons/lu";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { toast } from 'react-toastify';
-import  Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { setUserDetails } from '../Store/UserSlice';
 
-
 const Navigation = () => {
-      
     const dispatch = useDispatch();
-    const User = useSelector(state => state?.User.User)
+    const User = useSelector(state => state);
     console.log(User);
-
-    
-    
+  
+    const [menuDisplay,setMenuDisplay] = useState(false)
     const pages = ["Sign Up", "Login"];
-    const settings = ['My Account', "My Bookings", 'Logout'];
+    const settings = ['Admin-Panel', 'My Account', "My Bookings", 'Logout'];
 
-    const [anchorElNav, setAnchorElNav] = useState  (null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
     const username = localStorage.getItem('login') || '';
@@ -44,6 +39,7 @@ const Navigation = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
     const handlePageClick = (page) => {
         switch (page) {
             case 'Sign Up':
@@ -58,8 +54,12 @@ const Navigation = () => {
         handleCloseNavMenu();
     };
 
-    const handleSettingClick = async(setting) => {
+    const handleSettingClick = async (setting) => {
         switch (setting) {
+            case 'Admin-Panel':
+                setMenuDisplay(preve => !preve)
+                navigate("/AdminPanel");
+                break;
             case 'My Account':
                 navigate('/MyAccount');
                 break;
@@ -67,23 +67,19 @@ const Navigation = () => {
                 navigate('/MyBookings');
                 break;
             case 'Logout':
-            
-                    toast.success("Logged out successfully")
-                    localStorage.removeItem('login');
-                    localStorage.removeItem('usertoken');
-                    Cookies.remove("token");
-                    dispatch(setUserDetails(null))
-                    navigate("/");
-                    break;
-                
-
-               
-        
+                toast.success("Logged out successfully");
+                localStorage.removeItem('login');
+                localStorage.removeItem('usertoken');
+                Cookies.remove("token");
+                dispatch(setUserDetails(null));
+                navigate("/");
+                break;
             default:
                 break;
         }
         handleCloseUserMenu();
     };
+
   return (
     <header className=' shadow-md bg-white'>
         <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>

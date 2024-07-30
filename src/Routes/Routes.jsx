@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Accounts/Login';
 import Signup from '../pages/Accounts/Signup';
 import ForgotPassword from '../pages/Accounts/ForgotPassword';
+import Adminpanel from '../pages/Accounts/Adminpanel';
 
 const router = createBrowserRouter([
     {
@@ -15,22 +16,28 @@ const router = createBrowserRouter([
             path: "/",
             element: <Home />
           },
-          {
-             path:"/Login",
-             element:<Login/>
-          },
-          {
-            path:"/Register",
-            element:<Signup />
-          },
+
           {
             path:"/ForgotPassword",
             element:<ForgotPassword />
 
+          },
+          {
+            path: "/AdminPanel",
+            element: <Adminpanel />
           }
 
         ]
-    }
+    },
+    {
+        path:"/Login",
+        element:<Login/>
+    },
+            
+    {
+      path:"/Register",
+      element:<Signup />
+    },
 ])
 
 export default router;
