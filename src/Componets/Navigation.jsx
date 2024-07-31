@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from "../assest/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
@@ -9,16 +9,24 @@ import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
 import { setUserDetails } from '../Store/UserSlice';
 import { FaRegCircleUser } from 'react-icons/fa6';
+import Roles from '../../Constants/apiurl';
+import "./Navigation.css"
 
 const Navigation = () => {
     const dispatch = useDispatch();
     const User = useSelector(state => state?.User?.User);
-
+    
 
     const [menuDisplay, setMenuDisplay] = useState(false)
     const navigate = useNavigate();
 
-
+    
+    useEffect(()=>{
+        if(!User?.role === Roles.ADMIN){
+          navigate("/")
+        }
+    },[User])
+    
 
     const handleLogout = () => {
         toast.success("Logged out successfully");
@@ -68,10 +76,10 @@ const Navigation = () => {
                                 menuDisplay && (
                                     <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded' >
                                         <nav>
-
+                                          {User?.role === Roles.ADMIN && (
                                             <Link to={"/AdminPanel/AllProducts"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
 
-
+                                          )}
 
                                         </nav>
                                     </div>
@@ -95,10 +103,11 @@ const Navigation = () => {
                     <div>
                         {
                             User?._id ? (
-                                <Button variant='contained' onClick={handleLogout }>Logout</Button>
+                                <button onClick={handleLogout}>Logout</button>
+
                             )
                                 : (
-                                    <Button variant='contained'><Link to={"/Login"} className='px-3 py-1 rounded-full'>Login</Link></Button>
+                                    <button><Link to={"/Login"} className='px-3 py-1 rounded-full'>Login</Link></button>
                                 )
                         }
 
