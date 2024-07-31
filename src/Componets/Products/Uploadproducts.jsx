@@ -13,7 +13,7 @@ import UploadImage from '../../helpers/UploadImage';
 import DisplayImage from './DisplayImage';
 import { apiurl } from '../../../Constants/apiurl';
 
-const UploadProduct = ({ onClose, open }) => {
+const UploadProduct = ({ onClose, open,fetchallproducts }) => {
   const [data, setData] = useState({
     productName: "",
     brandName: "",
@@ -72,7 +72,7 @@ const UploadProduct = ({ onClose, open }) => {
     if (response.data.success) {
       toast.success(response.data.message);
       onClose();
-     
+     fetchallproducts();    
     }
 
     if (response.error) {
