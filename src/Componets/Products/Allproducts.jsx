@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./allproducts.css"
-import Uploadproducts from '../Componets/Products/Uploadproducts'
+import Uploadproducts from './Uploadproducts'
 const Allproducts = () => {
   const [UploadProduct,setUploadProduct] = useState(false)
   const [allProduct,setAllProduct] = useState([])
@@ -12,7 +12,7 @@ const Allproducts = () => {
         </button>
         </div>
         { UploadProduct && (
-        <Uploadproducts UploadProduct={UploadProduct} onClose = {()=>{setUploadProduct(false)}}/>
+        <Uploadproducts open={UploadProduct} onClose = {()=>{setUploadProduct(false)}}/>
         )}
     </div>
   )
