@@ -11,6 +11,7 @@ import { Modal, Dialog, DialogTitle, DialogContent, DialogActions, Button, IconB
 import productCategory from '../../helpers/ProductCategory';
 import UploadImage from '../../helpers/UploadImage';
 import DisplayImage from './DisplayImage';
+import { apiurl } from '../../../Constants/apiurl';
 
 const UploadProduct = ({ onClose, open }) => {
   const [data, setData] = useState({
@@ -59,24 +60,24 @@ const UploadProduct = ({ onClose, open }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
       console.log("data: " , data);
-    // const response = await axios.post(`${apiurl}/Uploadproduct`,{
-    //   data
-    // },{
-    //   withCredentials: true
-    // }) ;
+    const response = await axios.post(`${apiurl}/UploadProduct`,{
+      data
+    },{
+      withCredentials: true
+    }) ;
    
-    // console.log(response);
+    console.log(response.data);
    
 
-    // if (response.success) {
-    //   toast.success(response.message);
-    //   onClose();
-    //   fetchData();
-    // }
+    if (response.data.success) {
+      toast.success(response.data.message);
+      onClose();
+     
+    }
 
-    // if (response.error) {
-    //   toast.error(response?.message);
-    // }
+    if (response.error) {
+      toast.error(response?.message);
+    }
   };
 
   return (
@@ -119,6 +120,7 @@ const UploadProduct = ({ onClose, open }) => {
                 value={data.category}
                 onChange={handleOnChange}
                 label="Category"
+                required
               >
                 <MenuItem value="">
                   <em>Select Category</em>
@@ -134,7 +136,7 @@ const UploadProduct = ({ onClose, open }) => {
                   <div className="text-slate-500 flex justify-center items-center flex-col gap-2">
                     <span className="text-4xl"><FaCloudUploadAlt /></span>
                     <p className="text-sm">Upload Product Image</p>
-                    <input type="file" id="uploadImageInput" className="hidden"  onChange={handleUploadProduct}/>
+                    <input type="file" id="uploadImageInput" className="hidden" required onChange={handleUploadProduct}/>
                   </div>
                 </div>
               </label>
