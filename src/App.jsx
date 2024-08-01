@@ -9,6 +9,7 @@ import axios from 'axios'
 import { apiurl } from '../Constants/apiurl'
 import { setUserDetails } from './Store/UserSlice'
 import { useDispatch } from 'react-redux'
+import EmartContext from './Context/Context'
 
 
 
@@ -18,6 +19,7 @@ const App = () => {
   
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
+  const [cartProductCount,setCartProductCount] = useState(0)
 
    const fetchUserDetails = async () => {
     try {
@@ -35,9 +37,29 @@ const App = () => {
       setIsLoading(false);
     }
   };
+   
+  const fetchCartCount = async() =>{
+    try{
+      const datares = await axios.get(`${apiurl}/CountCartPerUser`,{
+        withCredentials: true,
+      })
+      console.log('cart count', datares.data);
+      if(datares.data.success){
+        console.log('cart count:', datares.data.data.count);
+        setCartProductCount(datares?.data?.data?.count)
+      }
+    }
+    catch(error){
+      console.error('Failed to fetch cart count:', error);
+      toast.error('Failed to fetch cart count');
+    }
 
+  }
   useEffect(() => {
     fetchUserDetails();
+
+
+    fetchCartCount(); // To be implemented when API is ready. For now, it's commented out.
   }, []);
 
   
@@ -47,7 +69,12 @@ const App = () => {
 
   return (
     <div>
-    <ToastContainer position="top-right" autoClose={5000} />
+     <EmartContext.Provider value={{
+          fetchUserDetails, // user detail fetch 
+          cartProductCount, // current user add to cart product count,
+          fetchCartCount
+      }}>
+    <ToastContainer position="top-center" autoClose={5000} />
     <Navigation />
     {isLoading ? (
       <div className="loading">Loading...</div>
@@ -57,6 +84,7 @@ const App = () => {
       </main>
     )}
     <Footer />
+    </EmartContext.Provider>
   </div>
   )
 }

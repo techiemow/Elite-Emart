@@ -11,8 +11,13 @@ const RecomendedProducts = ({ category, heading }) => {
   const LoadingList = new Array(12).fill(null);
   const navigate = useNavigate();
 
+  
+  const { fetchCartCount } = useContext(EmartContext)
+  
+
   const handleAddToCart = async (e, id) => {
     await AddToCart(e, id);
+    fetchCartCount();
   };
 
   const fetchProductData = async () => {

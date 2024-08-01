@@ -19,6 +19,7 @@ import login from "../../assest/login.png"
 import styled from '@emotion/styled';
 import { apiurl } from '../../../Constants/apiurl';
 import { toast } from 'react-toastify';
+import EmartContext from '../../Context/Context';
 
 function Copyright(props) {
   return (
@@ -55,6 +56,9 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+
+
+
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -81,6 +85,8 @@ const Login = () => {
         localStorage.setItem('login', apiResponse.data.data.user.username);
         localStorage.setItem('usertoken', apiResponse.data.data.token);
         toast.success("Login success");
+
+
         navigate('/');
       } else {
         toast.error("Invalid credentials");

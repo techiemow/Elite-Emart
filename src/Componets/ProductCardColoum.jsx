@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import BrowseByCategory from '../helpers/BrowseByCategory'
 import EmartContext from '../Context/Context';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
@@ -14,11 +14,11 @@ const ProductCardColoum = ({ category, heading }) => {
     const [scroll, setScroll] = useState(0)
     const scrollElement = useRef()
   
-    // const { fetchUserAddToCart } = useContext(EmartContext)
+    const { fetchCartCount } = useContext(EmartContext)
   
     const handleAddToCart = async (e, id) => {
       await AddToCart (e, id)
-      // fetchUserAddToCart()
+      fetchCartCount();
     }
   
     const fetchProductData = async () => {

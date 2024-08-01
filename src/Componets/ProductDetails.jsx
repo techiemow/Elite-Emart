@@ -30,6 +30,13 @@ const ProductDetails = () => {
     sellingPrice: ""
   });
 
+  const { fetchCartCount } = useContext(EmartContext)
+  const handleAddToCart = async (e, id) => {
+    await AddToCart (e, id)
+    fetchCartCount();
+  }
+ 
+
   const fetchApiRequest = async () => {
     try {
       setIsLoading(true);
@@ -46,6 +53,12 @@ const ProductDetails = () => {
   useEffect(() => {
     fetchApiRequest();
   }, [id]);
+
+
+  useEffect(() => {
+    // Scroll to the top when the component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleMouseEnterProduct = (imageURL) => {
     setActiveImage(imageURL);
@@ -67,9 +80,7 @@ const ProductDetails = () => {
     setZoomImage(false);
   };
 
-  const handleAddToCart = async (e, id) => {
-    await AddToCart(e, id);
-  };
+
 
   const handleBuyProduct = async (e, id) => {
     await AddToCart(e, id);
@@ -177,8 +188,8 @@ const ProductDetails = () => {
                 <p className='text-blue-400 line-through'>{displayINRCurrency(data.price)}</p>
               </div>
               <div className='flex items-center gap-3 my-2'>
-                <button className='border-2 border-blue-500 rounded px-3 py-1 min-w-[120px] text-blue-600 font-medium hover:bg-blue-600 hover:text-white' onClick={(e) => handleBuyProduct(e, data?._id)}>Buy</button>
-                <button className='border-2 border-blue-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-blue-600 hover:text-blue-600 hover:bg-white' onClick={(e) => handleAddToCart(e, data?._id)}>Add To Cart</button>
+                <button className='border-2 border-blue-500 rounded px-3 py-1 min-w-[120px] text-white-600 font-medium hover:text-blue-600 hover:bg-white' onClick={(e) => handleBuyProduct(e, data?._id)}>Buy</button>
+                <button className='border-2 border-blue-600 rounded px-3 py-1 min-w-[120px] font-medium text-black bg-white-600 hover:text-blue-600 hover:bg-white' onClick={(e) => handleAddToCart(e, data?._id)}>Add To Cart</button>
               </div>
               <div>
                 <p className='text-slate-600 font-medium my-1'>Description:</p>

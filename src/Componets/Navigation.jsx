@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import logo from "../assest/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
@@ -11,6 +11,7 @@ import { setUserDetails } from '../Store/UserSlice';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import Roles from '../../Constants/apiurl';
 import "./Navigation.css"
+import EmartContext from '../Context/Context';
 
 const Navigation = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const Navigation = () => {
 
     const [menuDisplay, setMenuDisplay] = useState(false)
     const navigate = useNavigate();
+    
+    const Emart = useContext(EmartContext)
+    console.log(Emart);
+    const fetchCartCount = Emart.fetchCartCount
 
     
     useEffect(()=>{
@@ -26,6 +31,10 @@ const Navigation = () => {
           navigate("/")
         }
     },[User])
+
+    useEffect(()=>{
+        fetchCartCount()
+    },[])
     
 
     const handleLogout = () => {
@@ -38,7 +47,7 @@ const Navigation = () => {
     }
 
     return (
-        <header className=' shadow-md bg-white'>
+        <header className=' shadow-md bg-white fixed w-full z-40'>
             <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
                 <div className='flex items-center' style={{ marginTop: "10px" }}>
                     <img src={logo} alt="Logo" className="h-16" onClick={() => navigate("/")} />
@@ -90,14 +99,19 @@ const Navigation = () => {
 
 
                     </div>
+                    { User?._id && (
                     <div className='text-2xl relative'>
                         <span> <FaShoppingCart /></span>
-                        <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
-                            <Typography>
-                                <span>0</span>
-                            </Typography>
-                        </div>
+                        
+                             <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
+                             <Typography>
+                                 {Emart?.cartProductCount}
+                             </Typography>
+                         </div>
+                       
+                       
                     </div>
+                     )}
 
 
                     <div>
