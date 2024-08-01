@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback,  useContext,  useEffect, useState } from 'react';
 import { apiurl } from '../../Constants/apiurl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import displayINRCurrency from '../helpers/DisplayAmount';
 import AddToCart from '../helpers/AddToCart';
 import RecomendedProducts from './RecomendedProducts';
+import EmartContext from '../Context/Context';
+
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -30,7 +32,8 @@ const ProductDetails = () => {
     sellingPrice: ""
   });
 
-  const { fetchCartCount } = useContext(EmartContext)
+ const {fetchCartCount} = useContext(EmartContext)
+  
   const handleAddToCart = async (e, id) => {
     await AddToCart (e, id)
     fetchCartCount();

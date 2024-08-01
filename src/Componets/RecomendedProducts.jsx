@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react'; // Import useContext
 import { useNavigate } from 'react-router-dom';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import displayINRCurrency from '../helpers/DisplayAmount';
 import AddToCart from '../helpers/AddToCart';
 import BrowseByCategory from '../helpers/BrowseByCategory';
+import EmartContext from '../Context/Context';
+
 
 const RecomendedProducts = ({ category, heading }) => {
   const [productData, setProductData] = useState([]);
@@ -11,9 +13,7 @@ const RecomendedProducts = ({ category, heading }) => {
   const LoadingList = new Array(12).fill(null);
   const navigate = useNavigate();
 
-  
-  const { fetchCartCount } = useContext(EmartContext)
-  
+  const { fetchCartCount } = useContext(EmartContext); // Use useContext
 
   const handleAddToCart = async (e, id) => {
     await AddToCart(e, id);
