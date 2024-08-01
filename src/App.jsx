@@ -75,11 +75,13 @@ const App = () => {
           fetchCartCount
       }}>
     <ToastContainer position="top-center" autoClose={5000} />
+    <div className='source'>
     <Navigation />
+    </div>
     {isLoading ? (
       <div className="loading">Loading...</div>
     ) : (
-      <main className='min-h-[calc(100vh-150px)] source'>
+      <main className='min-h-[calc(100vh-120px)] source'>
         <Outlet />
       </main>
     )}

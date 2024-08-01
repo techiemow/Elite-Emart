@@ -47,7 +47,7 @@ const Navigation = () => {
     }
 
     return (
-        <header className=' shadow-md bg-white fixed w-full z-40'>
+        <header className='h-20 shadow-md bg-white w-full'>
             <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
                 <div className='flex items-center' style={{ marginTop: "10px" }}>
                     <img src={logo} alt="Logo" className="h-16" onClick={() => navigate("/")} />
@@ -100,7 +100,7 @@ const Navigation = () => {
 
                     </div>
                     { User?._id && (
-                    <div className='text-2xl relative'>
+                    <Link to={"/Cart"} className='text-2xl relative'>
                         <span> <FaShoppingCart /></span>
                         
                              <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
@@ -110,7 +110,7 @@ const Navigation = () => {
                          </div>
                        
                        
-                    </div>
+                    </Link>
                      )}
 
 

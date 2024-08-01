@@ -9,7 +9,7 @@ const Allproducts = () => {
   const [allProduct,setAllProduct] = useState([])
 
    const fetchallproducts = async() =>{
-
+     
     const response = await axios.get(`${apiurl}/GetProducts`)
     console.log("product data",response)
 
@@ -18,7 +18,7 @@ const Allproducts = () => {
    }
 
    useEffect(()=>{
-fetchallproducts();
+   fetchallproducts();
    },[])
 
 
