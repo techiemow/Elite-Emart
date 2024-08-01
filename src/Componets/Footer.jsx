@@ -10,7 +10,7 @@ import { Link } from '@mui/material';
 const FooterContainer = styled(Box)`
   background-color: #f1f1f1;
   padding: 2rem 0;
-  margin-top: auto;
+
 `;
 
 const FooterLink = styled(Link)`

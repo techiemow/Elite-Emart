@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {apiurl}  from "../../Constants/apiurl"
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 const CategoryList = () => {
     const [categoryProduct,setCategoryProduct] = useState([])
     const [loading,setLoading] = useState(false)
@@ -17,13 +18,26 @@ const CategoryList = () => {
         setCategoryProduct(response?.data?.data || [])
     }
 
+    
+    const scrollElement = useRef()
+  const scrollRight = () => {
+    scrollElement.current.scrollLeft += 300
+  }
+  const scrollLeft = () => {
+    scrollElement.current.scrollLeft -= 300
+  }
+
+
     useEffect(()=>{
         fetchCategoryProduct()
     },[])
 
   return (
     <div className='container mx-auto p-4'>
-           <div className='flex items-center gap-4 justify-between overflow-auto '>
+           <div className='flex items-center gap-4 justify-between overflow-auto scrollbar-none' ref={scrollElement}>
+            
+        <button className='bg-white shadow-md rounded-full p-1 absolute left-0 text-lg xl:hidden     ' onClick={scrollLeft}><FaAngleLeft /></button>
+        <button className='bg-white shadow-md rounded-full p-1 absolute right-0 text-lg  xl:hidden' onClick={scrollRight}><FaAngleRight /></button>
             {
 
                 loading ? (
