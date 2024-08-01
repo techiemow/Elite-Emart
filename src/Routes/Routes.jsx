@@ -9,6 +9,7 @@ import Adminpanel from '../pages/Accounts/Adminpanel';
 import AllUsers from '../pages/Accounts/AllUsers';
 import Allproducts from '../Componets/Products/Allproducts';
 import CategoryProduct from '../Componets/CatagoryProduct';
+import ProductDetails from '../Componets/ProductDetails';
 
 
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
           {path:"CategoryProduct/:CategoryName",
             element:<CategoryProduct />
 
+          },
+          {
+            path:"Product/:id",
+            element:<ProductDetails />
           },
           {
             path: "AdminPanel",

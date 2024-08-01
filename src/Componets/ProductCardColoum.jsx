@@ -4,6 +4,7 @@ import EmartContext from '../Context/Context';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 import displayINRCurrency from '../helpers/DisplayAmount';
+import AddToCart from '../helpers/AddToCart';
 
 const ProductCardColoum = ({ category, heading }) => {
     const [productData, setProductData] = useState([]);
@@ -16,15 +17,14 @@ const ProductCardColoum = ({ category, heading }) => {
     // const { fetchUserAddToCart } = useContext(EmartContext)
   
     const handleAddToCart = async (e, id) => {
-      await addToCart(e, id)
-      fetchUserAddToCart()
+      await AddToCart (e, id)
+      // fetchUserAddToCart()
     }
   
     const fetchProductData = async () => {
-      console.log('Fetching data for category:', category);
      
       const response = await BrowseByCategory(category);
-      console.log('Response from BrowseByCategory:', response);
+     
       setProductData(response);
       setIsLoading(false);
     };
@@ -34,7 +34,7 @@ const ProductCardColoum = ({ category, heading }) => {
     }, [category]);
   
     useEffect(() => {
-      console.log('Product data updated:', productData);
+   
     }, [productData]);
   
     const scrollRight = () => {
@@ -77,7 +77,7 @@ const ProductCardColoum = ({ category, heading }) => {
       ) : (
         productData.map((product, index) => {
           return (
-            <Link to={"product/" + product?._id} className='w-full min-w-[280px] sm:min-w-[330px] max-w-[280px] sm:max-w-[330px] bg-white rounded-sm shadow'>
+            <Link to={"Product/" + product?._id} className='w-full min-w-[280px] sm:min-w-[330px] max-w-[280px] sm:max-w-[330px] bg-white rounded-sm shadow'>
               <div className='bg-white h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center '>
                 <img src={product.productImage[0]} className='object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply ' />
               </div>

@@ -52,7 +52,7 @@ const App = () => {
     {isLoading ? (
       <div className="loading">Loading...</div>
     ) : (
-      <main className='min-h-[calc(100vh-110px)] source'>
+      <main className='min-h-[calc(100vh-150px)] source'>
         <Outlet />
       </main>
     )}
