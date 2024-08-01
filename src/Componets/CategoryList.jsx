@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import {apiurl}  from "../../Constants/apiurl"
 const CategoryList = () => {
     const [categoryProduct,setCategoryProduct] = useState([])
     const [loading,setLoading] = useState(false)
@@ -10,10 +10,11 @@ const CategoryList = () => {
 
     const fetchCategoryProduct = async() =>{
         setLoading(true)
-        const response = await axios.get("/Categorylist")
-        const dataResponse = await response.json()
+        console.log(apiurl);
+        const response = await axios.get(`${apiurl}/Categorylist`)
+         console.log(response);
         setLoading(false)
-        setCategoryProduct(dataResponse.data)
+        setCategoryProduct(response?.data?.data || [])
     }
 
     useEffect(()=>{
@@ -22,7 +23,7 @@ const CategoryList = () => {
 
   return (
     <div className='container mx-auto p-4'>
-           <div className='flex items-center gap-4 justify-between overflow-scroll scrollbar-none'>
+           <div className='flex items-center gap-4 justify-between overflow-auto '>
             {
 
                 loading ? (
@@ -36,7 +37,8 @@ const CategoryList = () => {
                 (
                     categoryProduct.map((product,index)=>{
                         return(
-                            <Link to={"/product-category?category="+product?.category} className='cursor-pointer' key={product?.category}>
+                           
+                            <Link to={`/CategoryProduct/${product?.category}`} className='cursor-pointer' key={product?.category}>
                                 <div className='w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center'>
                                     <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all'/>
                                 </div>

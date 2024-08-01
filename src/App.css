@@ -45,3 +45,10 @@ header {
     );
   background-size: var(--size) var(--size);
 }
+/* To hide the scroll-bar */
+/* Add these styles in your CSS file */
+
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari, and Opera */
+}

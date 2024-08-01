@@ -1,9 +1,15 @@
 import React from 'react'
-import CategoryList from '../Componets/Products/CategoryList'
+import CategoryList from '../Componets/CategoryList'
+import Banner from '../Componets/Banner'
+
+
 
 const Home = () => {
   return (
-    <div><CategoryList/></div>
+    <div>
+      <CategoryList/>
+      <Banner />
+      </div>
   )
 }
 
