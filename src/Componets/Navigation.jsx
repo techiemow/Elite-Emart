@@ -3,7 +3,7 @@ import logo from "../assest/logo.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Cookies from "js-cookie";
@@ -13,17 +13,24 @@ import Roles from '../../Constants/apiurl';
 import "./Navigation.css"
 import EmartContext from '../Context/Context';
 
+
 const Navigation = () => {
     const dispatch = useDispatch();
     const User = useSelector(state => state?.User?.User);
     
 
     const [menuDisplay, setMenuDisplay] = useState(false)
+    
     const navigate = useNavigate();
     
     const Emart = useContext(EmartContext)
   
     const fetchCartCount = Emart.fetchCartCount
+
+    const searchInput = useLocation();
+    const URLSearch = new URLSearchParams(searchInput?.search);
+    const searchQuery = URLSearch.get("product") || "";
+    const [search, setSearch] = useState(searchQuery);
 
     
     useEffect(()=>{
@@ -46,16 +53,31 @@ const Navigation = () => {
         navigate("/");
     }
 
+    const handleSearch = (e) => {
+        const { value } = e.target;
+        setSearch(value);
+        if (value) {
+            navigate(`/Search?product=${value}`);
+        } else {
+            navigate("/");
+        }
+    };
+
+  
+    const handlelogoclick = () => {
+        navigate("/")
+        setSearch("")
+    }
     return (
         <header className='h-20 shadow-md bg-white w-full'>
             <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
                 <div className='flex items-center' style={{ marginTop: "10px" }}>
-                    <img src={logo} alt="Logo" className="h-16" onClick={() => navigate("/")} />
+                    <img src={logo} alt="Logo" className="h-16" onClick={handlelogoclick} />
                 </div>
                 <div className='hidden lg:flex items-center w-full justify-between max-w-sm focus-within:shadow-lg '>
-                    <TextField label="search products here....." className='w-full outline-none' />
-                    <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm'>
-                        <SearchIcon className='text-white' />
+                    <TextField label="search products here....." className='w-full outline-none' onChange={handleSearch} value={search} />
+                    <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm' >
+                        <SearchIcon className='text-white cursor-pointer' />
                     </div>
 
                 </div>

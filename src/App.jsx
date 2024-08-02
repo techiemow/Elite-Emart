@@ -43,9 +43,9 @@ const App = () => {
       const datares = await axios.get(`${apiurl}/CountCartPerUser`,{
         withCredentials: true,
       })
-      console.log('cart count', datares.data);
+      
       if(datares.data.success){
-        console.log('cart count:', datares.data.data.count);
+       
         setCartProductCount(datares?.data?.data?.count)
       }
     }

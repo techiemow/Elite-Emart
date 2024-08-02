@@ -6,23 +6,23 @@ const AddToCart = async (e, id) => {
   e?.stopPropagation();
   e?.preventDefault();
 
-  try {
+  
     const response = await axios.post(`${apiurl}/AdditionToCart/${id}`, {}, { withCredentials: true });
  
 
-    console.log(response);
+    console.log("ADD to cart",response);
     if (response.data.success) {
       toast.success(response.data.message);
-    } else {
-      toast.error(response.data.message);
+    } 
+    
+    if(response.error) {
+    
+      
+      toast.error(response.message);
     }
 
     return response.data;
-  } catch (error) {
-    toast.error("An error occurred while adding the product to the cart.");
-    console.error("Add to Cart Error:", error);
-    return { error: true, message: error.message };
-  }
+  
  
 };
 

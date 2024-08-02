@@ -8,7 +8,52 @@ const CategoryProduct = () => {
     console.log("location",);
   return (
 
-    <div>{CategoryName?.CategoryName}</div>
+    <div className='container mx-auto p-4'>
+       <div>
+              <div>
+
+              </div>
+
+               
+
+
+               <div>
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
   )
 }
 
