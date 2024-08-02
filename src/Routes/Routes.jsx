@@ -12,6 +12,9 @@ import CategoryProduct from '../Componets/CatagoryProduct';
 import ProductDetails from '../Componets/ProductDetails';
 import Cart from '../pages/Cart';
 import SearchPage from '../pages/SearchPage';
+import PaymentSucess from '../pages/PaymentSucess';
+import PaymentFailure from '../pages/PaymentFailure';
+import Order from '../pages/Order';
 
 
 
@@ -37,8 +40,20 @@ const router = createBrowserRouter([
 
           },
           {
+            path:"PaymentSucess",
+            element:<PaymentSucess />
+          },
+          {
+            path:"PaymentFailure",
+            element:<PaymentFailure />
+          },
+          {
             path:"Product/:id",
             element:<ProductDetails />
+          },
+          {
+            path:"Order",
+            element:<Order />
           },
           {
             path:"Cart",

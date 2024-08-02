@@ -10,6 +10,7 @@ import { apiurl } from '../Constants/apiurl'
 import { setUserDetails } from './Store/UserSlice'
 import { useDispatch } from 'react-redux'
 import EmartContext from './Context/Context'
+import PaymentSucess from './pages/PaymentSucess'
 
 
 
@@ -83,6 +84,7 @@ const App = () => {
     ) : (
       <main className='min-h-[calc(100vh-120px)] source'>
         <Outlet />
+        {/* <PaymentSucess /> */}
       </main>
     )}
     <Footer />

@@ -5,6 +5,7 @@ import EmartContext from '../Context/Context';
 import displayINRCurrency from '../helpers/DisplayAmount';
 import { MdDelete } from 'react-icons/md';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
     const User = useSelector(state => state?.User?.User);
@@ -13,7 +14,7 @@ const Cart = () => {
     const context = useContext(EmartContext);
     const { fetchCartCount } = useContext(EmartContext);
     const LoadingCart = new Array(context.cartProductCount).fill(null);
-
+    const navigate = useNavigate();
     const fetchData = async () => {
         const resp = await axios.get(`${apiurl}/ViewCart`, {
             withCredentials: true,
@@ -73,6 +74,50 @@ const Cart = () => {
     const totalQuantity = data.reduce((prev, curr) => prev + curr.quantity, 0);
     const totalPrice = data.reduce((prev, curr) => prev + curr.quantity * curr?.productId?.sellingPrice, 0);
 
+    const handlepayment = async() =>{
+        try {
+            const response = await axios.post(`${apiurl}/checkout`, {
+                cartItems: data,
+                amount: totalPrice,
+                currency: 'INR'
+            }, {
+                withCredentials: true
+            });
+
+            const { order_id, amount } = response.data;
+
+            // Razorpay payment options
+            const options = {
+                key: "rzp_test_DClMygpDU9TijX",
+                amount: amount, // Amount in paise
+                currency: 'INR',
+                name: 'Your Company',
+                description: 'Test Transaction',
+                order_id: order_id, // Order ID created in the backend
+                handler: function (response) {
+                    console.log('Payment Success:', response);
+                    response.razorpay_payment_id ? (
+                        navigate("/PaymentSucess")
+                    ):(
+                        navigate("/PaymentFailure")
+                    )
+        
+                },
+                prefill: {
+                    email: 'john.doe@example.com', // Example email
+                },
+                theme: {
+                    color: '#3399cc',
+                },
+            };
+
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+        } catch (error) {
+            console.error('Error creating payment:', error);
+        }
+    };
+
     return User?._id ? (
         <div className='container mx-auto'>
             <div className='text-center text-lg '>
@@ -129,7 +174,9 @@ const Cart = () => {
                 </div>
 
                 {/* Final summary */}
-                <div className='mt-5 lg:mt-0 w-full max-w-sm'>
+               {
+                data[0] && (
+                    <div className='mt-5 lg:mt-0 w-full max-w-sm'>
                     {!isLoading ? (
                         <div className='h-36 bg-slate-200 border border-slate-300 animate-pulse'></div>
                     ) : (
@@ -143,10 +190,12 @@ const Cart = () => {
                                 <p>Total Price</p>
                                 <p>{displayINRCurrency(totalPrice)}</p>
                             </div>
-                            <button className='bg-blue-600 p-2 text-white w-full mt-2'>Payment</button>
+                            <button className='bg-blue-600 p-2 text-white w-full mt-2' onClick={handlepayment}>Pay Now</button>
                         </div>
                     )}
                 </div>
+                )
+               }
             </div>
         </div>
     ) : (
