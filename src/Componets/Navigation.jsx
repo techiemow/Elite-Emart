@@ -22,7 +22,7 @@ const Navigation = () => {
     const navigate = useNavigate();
     
     const Emart = useContext(EmartContext)
-    console.log(Emart);
+  
     const fetchCartCount = Emart.fetchCartCount
 
     
@@ -71,11 +71,10 @@ const Navigation = () => {
 
                             {
                                 User?._id && (
-                                    <div className='text-3xl cursor-pointer relative flex justify-center' onClick={() => setMenuDisplay(preve => !preve)}>
+                                    <div className='text-3xl cursor-pointer relative flex justify-center mix-blend-multiply' onClick={() => setMenuDisplay(preve => !preve)}>
 
 
-                                        <FaRegCircleUser />
-
+                                       <Avatar src="/broken-image.jpg" />
                                     </div>
                                 )
                             }
