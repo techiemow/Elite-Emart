@@ -74,11 +74,37 @@ const Cart = () => {
     const totalQuantity = data.reduce((prev, curr) => prev + curr.quantity, 0);
     const totalPrice = data.reduce((prev, curr) => prev + curr.quantity * curr?.productId?.sellingPrice, 0);
 
+
+
+    const handlePaymentSuccess = async (response) => {
+        try {
+            const paymentResponse = await axios.post(`${apiurl}/payment/success`, {
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpaySignature: response.razorpay_signature,
+            }, {
+                withCredentials: true
+            });
+    
+            console.log('Payment Success:', paymentResponse.data);
+    
+            if (response.razorpay_payment_id) {
+                navigate('/PaymentSucess');
+            } else {
+                navigate('/PaymentFailure');
+            }
+        } catch (error) {
+            console.error('Error handling payment success:', error);
+            navigate('/PaymentFailure');
+        }
+    };
+
     const handlepayment = async() =>{
         try {
             const response = await axios.post(`${apiurl}/checkout`, {
                 cartItems: data,
                 amount: totalPrice,
+                email: User.emailaddress,
                 currency: 'INR'
             }, {
                 withCredentials: true
@@ -91,20 +117,12 @@ const Cart = () => {
                 key: "rzp_test_DClMygpDU9TijX",
                 amount: amount, // Amount in paise
                 currency: 'INR',
-                name: 'Your Company',
-                description: 'Test Transaction',
+                name: "Elite eMart",
+                description: 'Buisness Transaction',
                 order_id: order_id, // Order ID created in the backend
-                handler: function (response) {
-                    console.log('Payment Success:', response);
-                    response.razorpay_payment_id ? (
-                        navigate("/PaymentSucess")
-                    ):(
-                        navigate("/PaymentFailure")
-                    )
-        
-                },
+                handler:handlePaymentSuccess,
                 prefill: {
-                    email: 'john.doe@example.com', // Example email
+                    email: User.emailaddress, // Example email
                 },
                 theme: {
                     color: '#3399cc',
