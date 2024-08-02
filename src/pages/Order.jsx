@@ -32,22 +32,26 @@ const Order = () => {
     return <div>Loading...</div>;
   }
 
+  // Check if there is any order with a non-empty status field, specifically "Failed"
+  const hasFailedStatus = data.some(order => order.paymentDetails && order.paymentDetails.status === 'Failed');
+  const hasNonEmptyStatus = data.some(order => order.paymentDetails && order.paymentDetails.status && order.paymentDetails.status.trim() !== '');
+
   return (
-    <div className="order-container flex flex-col gap-3 px-4 sm:px-8">
+    <div className="order-container bg-slate-200 my-3 flex flex-col gap-3 px-4 sm:px-8">
       <h1 className="text-2xl font-bold mb-5 text-center">My Orders</h1>
       {data.length === 0 ? (
         <div>No orders found</div>
       ) : (
         <div className="overflow-x-auto">
           {/* Table for larger screens */}
-          <TableContainer component={Paper} className="hidden md:block">
+          <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow className="bg-gray-200">
                   <TableCell align="center" className="font-semibold">Email</TableCell>
                   <TableCell align="center" className="font-semibold">Total Amount</TableCell>
                   <TableCell align="center" className="font-semibold">Order ID</TableCell>
-                  <TableCell align="center" className="font-semibold">Payment Status</TableCell>
+                  {(hasNonEmptyStatus || hasFailedStatus) && <TableCell align="center" className="font-semibold">Payment Status</TableCell>}
                   <TableCell align="center" className="font-semibold">Created At</TableCell>
                   <TableCell align="center" className="font-semibold">Products</TableCell>
                   <TableCell align="center" className="font-semibold">Quantity</TableCell>
@@ -61,7 +65,7 @@ const Order = () => {
                     </TableCell>
                     <TableCell align="center">{displayINRCurrency(order.totalAmount)}</TableCell>
                     <TableCell align="center">{order.paymentDetails.razorpayOrderId}</TableCell>
-                    <TableCell align="center">{order.paymentDetails.status}</TableCell>
+                    {(hasNonEmptyStatus || hasFailedStatus) && <TableCell align="center">{order.paymentDetails.status || 'N/A'}</TableCell>}
                     <TableCell align="center">{moment(order.createdAt).format("MMM Do YY")}</TableCell>
                     <TableCell align="center">
                       <ul>
@@ -90,7 +94,7 @@ const Order = () => {
                 <div className="mb-3"><strong>Email:</strong> {order.email}</div>
                 <div className="mb-3"><strong>Total Amount:</strong> {displayINRCurrency(order.totalAmount)}</div>
                 <div className="mb-3"><strong>Order ID:</strong> {order.paymentDetails.razorpayOrderId}</div>
-                <div className="mb-3"><strong>Payment Status:</strong> {order.paymentDetails.status}</div>
+                {(hasNonEmptyStatus || hasFailedStatus) && <div className="mb-3"><strong>Payment Status:</strong> {order.paymentDetails.status || 'N/A'}</div>}
                 <div className="mb-3"><strong>Created At:</strong> {moment(order.createdAt).format("MMM Do YY")}</div>
                 <div className="mb-3">
                   <strong>Products:</strong>
@@ -103,7 +107,6 @@ const Order = () => {
               </div>
             ))}
           </div>
-   
         </div>
       )}
     </div>
