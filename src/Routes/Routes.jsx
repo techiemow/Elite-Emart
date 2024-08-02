@@ -30,7 +30,9 @@ const router = createBrowserRouter([
             element:<ForgotPassword />
 
           },
-          {path:"CategoryProduct/:CategoryName",
+          {
+            
+            path:"CategoryProduct",
             element:<CategoryProduct />
 
           },
