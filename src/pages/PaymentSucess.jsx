@@ -15,7 +15,7 @@ const PaymentSucess = () => {
 
   return (
     <div className='flex w-full max-w-lg mx-auto justify-center items-center flex-col p-4'>
-        <img src={Success} alt='Payment Successful'  className='mix-blend-multiply'/>
+        <img src={Success} alt='Payment Successful'  className=''/>
 
 
        

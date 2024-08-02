@@ -17,14 +17,14 @@ import EmartContext from '../Context/Context';
 const Navigation = () => {
     const dispatch = useDispatch();
     const User = useSelector(state => state?.User?.User);
-    
+
 
     const [menuDisplay, setMenuDisplay] = useState(false)
-    
+
     const navigate = useNavigate();
-    
+
     const Emart = useContext(EmartContext)
-  
+
     const fetchCartCount = Emart.fetchCartCount
 
     const searchInput = useLocation();
@@ -32,17 +32,17 @@ const Navigation = () => {
     const searchQuery = URLSearch.get("product") || "";
     const [search, setSearch] = useState(searchQuery);
 
-    
-    useEffect(()=>{
-        if(!User?.role === Roles.ADMIN){
-          navigate("/")
-        }
-    },[User])
 
-    useEffect(()=>{
+    useEffect(() => {
+        if (!User?.role === Roles.ADMIN) {
+            navigate("/")
+        }
+    }, [User])
+
+    useEffect(() => {
         fetchCartCount()
-    },[])
-    
+    }, [])
+
 
     const handleLogout = () => {
         toast.success("Logged out successfully");
@@ -63,7 +63,7 @@ const Navigation = () => {
         }
     };
 
-  
+
     const handlelogoclick = () => {
         navigate("/")
         setSearch("")
@@ -94,11 +94,10 @@ const Navigation = () => {
                             {
                                 User?._id && (
                                     <div className='text-3xl cursor-pointer relative flex justify-center mix-blend-multiply' onClick={() => setMenuDisplay(preve => !preve)}>
-
-
-                                       <Avatar src="/broken-image.jpg" />
+                                        <Avatar src="/broken-image.jpg" />
                                     </div>
                                 )
+
                             }
 
 
@@ -106,10 +105,11 @@ const Navigation = () => {
                                 menuDisplay && (
                                     <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded' >
                                         <nav>
-                                          {User?.role === Roles.ADMIN && (
-                                            <Link to={"/AdminPanel/AllProducts"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
+                                            {User?.role === Roles.ADMIN && (
+                                                <Link to={"/AdminPanel/AllProducts"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={() => setMenuDisplay(preve => !preve)}>Admin Panel</Link>
 
-                                          )}
+                                            )}
+                                            <Link to={"/Order"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'onClick={() => setMenuDisplay(preve => !preve)}>My Orders</Link>
 
                                         </nav>
                                     </div>
@@ -120,19 +120,19 @@ const Navigation = () => {
 
 
                     </div>
-                    { User?._id && (
-                    <Link to={"/Cart"} className='text-2xl relative'>
-                        <span> <FaShoppingCart /></span>
-                        
-                             <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
-                             <Typography>
-                                 {Emart?.cartProductCount}
-                             </Typography>
-                         </div>
-                       
-                       
-                    </Link>
-                     )}
+                    {User?._id && (
+                        <Link to={"/Cart"} className='text-2xl relative'>
+                            <span> <FaShoppingCart /></span>
+
+                            <div className='bg-blue-600 text-white w-5 h-5 p-1 flex items-center justify-center rounded-full absolute -top-2 -right-3' >
+                                <Typography>
+                                    {Emart?.cartProductCount}
+                                </Typography>
+                            </div>
+
+
+                        </Link>
+                    )}
 
 
                     <div>

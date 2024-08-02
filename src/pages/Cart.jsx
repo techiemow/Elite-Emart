@@ -90,6 +90,7 @@ const Cart = () => {
     
             if (response.razorpay_payment_id) {
                 navigate('/PaymentSucess');
+                fetchCartCount();
             } else {
                 navigate('/PaymentFailure');
             }
