@@ -54,12 +54,12 @@ const Navigation = () => {
     
             console.log(response);
     
-            if (response.data.success) {  // Accessing the success message from response.data
+            if (response.data.success) { 
                 toast.success(response.data.message);
                 localStorage.removeItem('login');
                 localStorage.removeItem('usertoken');
                 dispatch(setUserDetails(null));
-                navigate("/");  // Redirecting the user after successful logout
+                navigate("/"); 
             }
         } catch (err) {
             toast.error("An error occurred during logout");
