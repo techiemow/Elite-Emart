@@ -26,7 +26,7 @@ const UserRole = ({ name, email, role, userId, onClose, callFunc }) => {
         toast.success(response.data.message);
         onClose();
         callFunc();
-        window.location.reload();
+       
       }
     } catch (error) {
       toast.error("Failed to update role: " + error.message);
