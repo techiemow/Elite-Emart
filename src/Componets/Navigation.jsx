@@ -6,12 +6,14 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import Cookies from "js-cookie";
+
 import { setUserDetails } from '../Store/UserSlice';
-import { FaRegCircleUser } from 'react-icons/fa6';
-import Roles from '../../Constants/apiurl';
+
+import Roles, { apiurl } from '../../Constants/apiurl';
 import "./Navigation.css"
 import EmartContext from '../Context/Context';
+import axios from "axios"
+
 
 
 const Navigation = () => {
@@ -44,15 +46,26 @@ const Navigation = () => {
     }, [])
 
 
-    const handleLogout = () => {
-        toast.success("Logged out successfully");
-        localStorage.removeItem('login');
-        localStorage.removeItem('usertoken');
-        Cookies.remove("token");
-        dispatch(setUserDetails(null));
-        navigate("/");
-    }
-
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post(`${apiurl}/Logout`, {}, {
+                withCredentials: true,
+            });
+    
+            console.log(response);
+    
+            if (response.data.success) {  // Accessing the success message from response.data
+                toast.success(response.data.message);
+                localStorage.removeItem('login');
+                localStorage.removeItem('usertoken');
+                dispatch(setUserDetails(null));
+                navigate("/");  // Redirecting the user after successful logout
+            }
+        } catch (err) {
+            toast.error("An error occurred during logout");
+        }
+    };
+    
     const handleSearch = (e) => {
         const { value } = e.target;
         setSearch(value);
