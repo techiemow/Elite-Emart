@@ -30,7 +30,7 @@ const Footer = () => {
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" gutterBottom>
-              EliteEmart
+              EliteeMart
             </Typography>
             <Typography variant="body2" color="textSecondary">
               Eliteemart is a leading provider of high-quality products. Our mission is to offer the best service and the most competitive prices.
@@ -63,7 +63,7 @@ const Footer = () => {
               Email: support@eliteemart.com
             </Typography>
             <Typography variant="body2" color="textSecondary">
-              Phone: +1 234 567 890
+              Phone: +91 9075234156
             </Typography>
             <Typography variant="body2" color="textSecondary">
               Address: 123 Main St, Bangalore ,India
@@ -72,7 +72,7 @@ const Footer = () => {
         </Grid>
         <Box mt={4} textAlign="center">
           <Typography variant="body2" color="textSecondary">
-            © {new Date().getFullYear()} EliteEmart. All rights reserved.
+            © {new Date().getFullYear()} EliteeMart. All rights reserved.
           </Typography>
         </Box>
       </Container>

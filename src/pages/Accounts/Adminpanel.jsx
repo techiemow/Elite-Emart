@@ -13,7 +13,7 @@ const AdminPanel = () => {
     return (
         <div className="min-h-[calc(100vh-100px)] flex boxshadow">
             <aside className="bg-white min-h-full w-full max-w-60 rounded-md">
-                <div className="bg-red-500 h-32 flex items-center justify-center flex-col">
+                <div className="bg-blue-400 h-32 flex items-center justify-center flex-col">
                     <div className="text-5xl cursor-pointer flex justify-center">
                         <Avatar src="/broken-image.jpg" />
                     </div>

@@ -87,6 +87,7 @@ const ProductDetails = () => {
 
   const handleBuyProduct = async (e, id) => {
     await AddToCart(e, id);
+    fetchCartCount();
     navigate("/Cart");
   };
 

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import logo from "../assest/logo.png";
+import logo from "../assest/png/logo-color.png";
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Button, IconButton, Menu, MenuItem, TextField, Tooltip, Typography } from '@mui/material';
 import { FaShoppingCart } from "react-icons/fa";
@@ -85,10 +85,10 @@ const Navigation = () => {
         <header className='h-20 shadow-md bg-white w-full'>
             <div className='container mx-auto flex items-center px-10 pb-4 h-full justify-between'>
                 <div className='flex items-center' style={{ marginTop: "10px" }}>
-                    <img src={logo} alt="Logo" className="h-16" onClick={handlelogoclick} />
+                    <img src={logo} alt="Logo" className="h-20 w-20" onClick={handlelogoclick} />
                 </div>
                 <div className='hidden lg:flex items-center w-full justify-between max-w-sm focus-within:shadow-lg '>
-                    <TextField label="search products here....." className='w-full outline-none' onChange={handleSearch} value={search} />
+                    <TextField label="search here....." className='w-full outline-none' onChange={handleSearch} value={search} />
                     <div className='w-13 min-w-[50px] h-14 bg-blue-500  flex items-center justify-center rounded-l-sm' >
                         <SearchIcon className='text-white cursor-pointer' />
                     </div>
