@@ -37,10 +37,10 @@ const Order = () => {
   const hasNonEmptyStatus = data.some(order => order.paymentDetails && order.paymentDetails.status && order.paymentDetails.status.trim() !== '');
 
   return (
-    <div className="order-container bg-slate-200 my-3 flex flex-col gap-3 px-4 sm:px-8">
+    <div className="order-container my-3 flex flex-col gap-3 px-4 sm:px-8">
       <h1 className="text-2xl font-bold mb-5 text-center">My Orders</h1>
       {data.length === 0 ? (
-        <div>No orders found</div>
+        <div className='text-center font-bold'>No orders found</div>
       ) : (
         <div className="overflow-x-auto">
           {/* Table for larger screens */}
