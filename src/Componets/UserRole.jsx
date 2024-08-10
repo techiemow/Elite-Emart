@@ -1,13 +1,18 @@
 import { Select, Typography, MenuItem, Button } from '@mui/material';
 import React, { useState } from 'react';
-
 import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Roles, { apiurl } from '../../Constants/apiurl';
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from '../Store/UserSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 const UserRole = ({ name, email, role, userId, onClose, callFunc }) => {
   const [selectedRole, setSelectedRole] = useState(role);
+  const dispatch = useDispatch(); // Initialize dispatch
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setSelectedRole(event.target.value);
@@ -24,9 +29,19 @@ const UserRole = ({ name, email, role, userId, onClose, callFunc }) => {
       console.log("role", response.data);
       if (response.data.success) {
         toast.success(response.data.message);
+        
+        // Fetch the updated user details and update the Redux store
+        const updatedUserResponse = await axios.get(`${apiurl}/UserDetails`, {
+          withCredentials: true,
+        });
+        
+        if (updatedUserResponse.data.success) {
+          dispatch(setUserDetails(updatedUserResponse.data.data)); // Update the Redux store with the new user de
+          navigate("/")
+        }
+
         onClose();
         callFunc();
-       
       }
     } catch (error) {
       toast.error("Failed to update role: " + error.message);

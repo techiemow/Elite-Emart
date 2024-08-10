@@ -57,10 +57,10 @@ const App = () => {
 
   }
   useEffect(() => {
-    fetchUserDetails();
+  fetchUserDetails();
 
 
-    fetchCartCount(); // To be implemented when API is ready. For now, it's commented out.
+  fetchCartCount(); // To be implemented when API is ready. For now, it's commented out.
   }, []);
 
   
