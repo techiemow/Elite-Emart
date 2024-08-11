@@ -74,28 +74,28 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const { username, password } = values;
-  
-    
-      const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`, {
-        withCredentials: true
-      });
-      
-      console.log(apiResponse.data.data)
-      if (apiResponse.data.success) {
-        localStorage.setItem('login', apiResponse.data.data.user.username);
-        localStorage.setItem('usertoken', apiResponse.data.data.token);
-        toast.success("Login success");
 
 
-        navigate('/');
-      } else {
-        toast.error("Invalid credentials");
-      }
-    
-  
+    const apiResponse = await axios.get(`${apiurl}/Login/${username}/${password}`, {
+      withCredentials: true
+    });
+
+    console.log(apiResponse.data.data)
+    if (apiResponse.data.success) {
+      localStorage.setItem('login', apiResponse.data.data.user.username);
+      localStorage.setItem('usertoken', apiResponse.data.data.token);
+      toast.success("Login success");
+
+
+      navigate('/');
+    } else {
+      toast.error("Invalid credentials");
+    }
+
+
     setSubmitting(false);
   };
-  
+
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -111,7 +111,7 @@ const Login = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "white" }}>
-              <img src={login} alt="login" />
+            <img src={login} alt="login" />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -136,21 +136,21 @@ const Login = () => {
                 />
                 <ErrorMessage name="username" component="div" className="error text-red-600" />
                 <PasswordFieldWrapper>
-      <Field
-        as={TextField}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        name="password"
-        label="Password"
-        type={showPassword ? 'text' : 'password'}
-        id="password"
-        autoComplete="current-password"
-      />
-      <div className="eye-icon" onClick={toggleShowPassword}>
-        {showPassword ? <FaEyeSlash /> : <FaEye />}
-      </div>
-    </PasswordFieldWrapper>
+                  <Field
+                    as={TextField}
+                    variant="outlined"
+                    margin="normal"
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                  <div className="eye-icon" onClick={toggleShowPassword}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </div>
+                </PasswordFieldWrapper>
                 <ErrorMessage name="password" component="div" className="error text-red-600" />
                 <FormControlLabel
                   control={<Checkbox value="remember" color="primary" onChange={() => setRemember(!remember)} />}
@@ -163,20 +163,16 @@ const Login = () => {
                   color="primary"
                   sx={{ mt: 3, mb: 2 }}
                   disabled={isSubmitting || !remember}
-                  
+
                 >
                   Sign In
                 </Button>
-                <Grid container justifyContent={"space-between"}>
+                <Grid container justifyContent={"end"}>
+
                   <Grid item>
-                    <Link to="/ForgotPassword" style={{ textDecoration: 'underline' }} className='text-blue-500 hover:text-red-500'>
-                    Forgot password !
+                    <Link to="/Register" style={{ textDecoration: 'underline' }} className='text-blue-500 '>
+                      {"Don't have an account? Sign Up"}
                     </Link>
-                    </Grid>
-                  <Grid item>
-                  <Link to="/Register" style={{ textDecoration: 'underline' }} className='text-blue-500 '>
-  {"Don't have an account? Sign Up"}
-</Link>
                   </Grid>
                 </Grid>
               </Box>
