@@ -20,8 +20,9 @@ import styled from 'styled-components';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { apiurl } from '../../../Constants/apiurl';
 import { toast } from 'react-toastify';
+import HomeNavbar from '../HomeNavbar';
 
-// Placeholder for apiurl
+
 
 
 function Copyright(props) {
@@ -116,6 +117,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+       <HomeNavbar/>
       <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Box

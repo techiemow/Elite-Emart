@@ -20,6 +20,7 @@ import styled from '@emotion/styled';
 import { apiurl } from '../../../Constants/apiurl';
 import { toast } from 'react-toastify';
 import EmartContext from '../../Context/Context';
+import HomeNavbar from '../HomeNavbar';
 
 function Copyright(props) {
   return (
@@ -99,6 +100,7 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <HomeNavbar/>
       <Container component="main" maxWidth="xs" sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <CssBaseline />
         <Box
