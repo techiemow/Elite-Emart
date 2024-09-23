@@ -2,6 +2,8 @@
 
     An e-commerce platform with a variety of electronic products, including the latest gadgets and accessories, offering a seamless user experience and a wide range of options to choose from.
 
+## Website : https://eliteemart.netlify.app
+
 The platform features two distinct roles: **User and Admin.**
 
 - Admin: Has full access to upload and manage products, as well as make purchases.
