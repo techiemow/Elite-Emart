@@ -1,6 +1,6 @@
 # EliteeMart
 
-    An e-store platform with a variety of electronic products, including the latest gadgets and accessories, offering a seamless user experience and a wide range of options to choose from.
+    An e-commerce platform with a variety of electronic products, including the latest gadgets and accessories, offering a seamless user experience and a wide range of options to choose from.
 
 The platform features two distinct roles: **User and Admin.**
 
