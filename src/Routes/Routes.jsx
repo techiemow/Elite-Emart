@@ -15,6 +15,7 @@ import SearchPage from '../pages/SearchPage';
 import PaymentSucess from '../pages/PaymentSucess';
 import PaymentFailure from '../pages/PaymentFailure';
 import Order from '../pages/Order';
+import MyProfile from '../pages/Accounts/MyProfile';
 
 
 
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <Home />
+          },
+          {
+            path:"/MyProfile",
+            element:<MyProfile/>
+
           },
 
           {

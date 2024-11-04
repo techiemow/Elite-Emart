@@ -123,6 +123,7 @@ const Navigation = () => {
 
                                             )}
                                             <Link to={"/Order"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'onClick={() => setMenuDisplay(preve => !preve)}>My Orders</Link>
+                                            <Link to={"/MyProfile"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'onClick={() => setMenuDisplay(preve => !preve)}>My Profile</Link>
 
                                         </nav>
                                     </div>
