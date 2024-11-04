@@ -37,7 +37,7 @@ const MyProfile = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>My Profile</h2>
+      <h2 style={{textAlign:"center"}}>My Profile</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>

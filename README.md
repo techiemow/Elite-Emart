@@ -121,3 +121,8 @@ To explore the Admin role, use the following credentials:
 
 - **Order History**: Create a section where users can view their past orders and track their current order's payment status etc.
 
+## Conclusion 
+
+I have worked on several projects incorporating creative options and relationships within MongoDB models. For instance, I utilized the IMDb API to fetch data, which adds a dynamic aspect to the applications. You can view one of my projects on GitHub:
+
+<a href="https://github.com/techiemow/IMDB-Front-end" target="_blank" rel="noopener noreferrer">IMDB Front-end Repository</a>
